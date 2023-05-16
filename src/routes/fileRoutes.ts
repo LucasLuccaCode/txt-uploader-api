@@ -1,10 +1,12 @@
 import { Request, Response, Router } from "express";
 
 import { UploadFileController } from "../controllers/upload-file";
+import { ListFilesController } from "../controllers/list-files";
 import { ReadFileController } from "../controllers/read-file";
 import { DeleteFileController } from "../controllers/delete-file";
 
 import { MongodbUploadFileRepository } from "../repositories/mongodb/upload-file";
+import { MongodbGetFilesRepository } from "../repositories/mongodb/get-files";
 import { MongodbGetFileByNameRepository } from "../repositories/mongodb/get-file-by-name";
 import { MongodbDeleteFileRepository } from "../repositories/mongodb/delete-file";
 
@@ -25,13 +27,22 @@ router.post(
   }
 );
 
+router.get("/files", async (req: Request, res: Response) => {
+  const listFilesController = new ListFilesController(
+    new MongodbGetFilesRepository()
+  );
+  const result = await listFilesController.handle();
+
+  res.status(result.statusCode).json({ files: result.body });
+});
+
 router.get("/files/:filename", async (req: Request, res: Response) => {
   const readFileController = new ReadFileController(
     new MongodbGetFileByNameRepository()
   );
   const result = await readFileController.handle({ params: req.params });
 
-  res.status(result.statusCode).json({ message: result.body });
+  res.status(result.statusCode).json({ file: result.body });
 });
 
 router.delete("/files/:filename", async (req: Request, res: Response) => {
