@@ -5,7 +5,7 @@ import express from "express";
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Conexão com banco de dados
+// Conexão com banco de dados mongodb
 import db from "./database/mongodb";
 
 db.once("open", () => {
@@ -13,6 +13,7 @@ db.once("open", () => {
   app.emit("logged");
 });
 
+// Rotas
 app.use("/", (req, res) => {
   res.status(200).send("Txt Uploader API!");
 });
