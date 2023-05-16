@@ -1,11 +1,13 @@
 import "dotenv/config";
 
 import express from "express";
+import fileRoutes from "./routes/fileRoutes";
+import { handleErrorMiddleware } from "./middlewares/handleErrorMiddleware";
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Conexão com banco de dados mongodb
+// Conectar ao banco de dados mongodb
 import db from "./database/mongodb";
 
 db.once("open", () => {
@@ -14,14 +16,15 @@ db.once("open", () => {
 });
 
 // Rotas
-app.use("/", (req, res) => {
-  res.status(200).send("Txt Uploader API!");
-});
+app.use("/files", fileRoutes);
+
+app.use(handleErrorMiddleware);
 
 app.use("*", (req, res) => {
   res.status(404).json({ error: "Rota não encontrada." });
 });
 
+// Iniciar servidor
 app.on("logged", () => {
   app.listen(port, () => console.log(`Server rodando na porta ${port}`));
 });
