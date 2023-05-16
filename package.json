@@ -4,7 +4,9 @@
   "description": "Api for uploading txt files",
   "main": "src/server.ts",
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only src/app.ts"
+    "start": "node build/server.js",
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "build": "tsc --project tsconfig.json"
   },
   "author": "Lucas Santos",
   "license": "ISC",
