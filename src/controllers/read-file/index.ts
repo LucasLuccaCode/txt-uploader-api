@@ -2,10 +2,6 @@ import { IFileModel } from "../../entities/file";
 import { HttpStatusCode, IHttpRequest, IHttpResponse } from "../protocols";
 import { IGetFileByNameRepository } from "./protocols";
 
-interface IFileParams {
-  filename: string;
-}
-
 export class ReadFileController {
   constructor(
     private readonly getFileByNameRepository: IGetFileByNameRepository
