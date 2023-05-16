@@ -2,7 +2,9 @@ import "dotenv/config";
 
 import express from "express";
 import fileRoutes from "./routes/fileRoutes";
+
 import { handleErrorMiddleware } from "./middlewares/handleErrorMiddleware";
+import { rateLimitMiddleware } from "./middlewares/rateLimitMiddleware";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -16,6 +18,8 @@ db.once("open", () => {
 });
 
 // Rotas
+app.use(rateLimitMiddleware);
+
 app.use("/", fileRoutes);
 
 app.use(handleErrorMiddleware);
