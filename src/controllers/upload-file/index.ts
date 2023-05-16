@@ -11,7 +11,7 @@ export class UploadFileController {
 
   async handle({
     file,
-  }: IMulterHttpRequest<null, null, null>): Promise<IHttpResponse<string>> {
+  }: IMulterHttpRequest<null>): Promise<IHttpResponse<string>> {
     try {
       if (!file) {
         return {
