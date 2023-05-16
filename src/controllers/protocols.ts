@@ -1,10 +1,10 @@
-export interface IHttpRequest<P, Q, B> {
-  params?: P;
-  query?: Q;
-  body?: B;
+export interface IHttpRequest<T> {
+  params?: any;
+  query?: any;
+  body?: T;
 }
 
-export interface IMulterHttpRequest<P, Q, B> extends IHttpRequest<P, Q, B> {
+export interface IMulterHttpRequest<T> extends IHttpRequest<T> {
   file?: Express.Multer.File;
 }
 
