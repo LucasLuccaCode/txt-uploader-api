@@ -1,3 +1,5 @@
+import CryptoJS from "crypto-js";
+
 import {
   HttpStatusCode,
   IHttpResponse,
@@ -22,11 +24,17 @@ export class UploadFileController {
 
       const { buffer, originalname: filename } = file;
 
+      const SECRET_KEY = process.env.SECRET_KEY || "secret";
+
       const content = buffer.toString("utf-8");
+      const encryptedContent = CryptoJS.AES.encrypt(
+        content,
+        SECRET_KEY
+      ).toString();
 
       await this.uploadFileRepository.uploadFile({
         filename,
-        content,
+        content: encryptedContent,
       });
 
       return {

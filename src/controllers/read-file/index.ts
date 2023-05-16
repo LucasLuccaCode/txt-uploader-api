@@ -1,4 +1,7 @@
+import CryptoJS from "crypto-js";
+
 import { IFileModel } from "../../entities/file";
+
 import { HttpStatusCode, IHttpRequest, IHttpResponse } from "../protocols";
 import { IGetFileByNameRepository } from "./protocols";
 
@@ -16,13 +19,21 @@ export class ReadFileController {
       if (!filename) {
         return {
           statusCode: HttpStatusCode.BAD_REQUEST,
-          body: `Parâmetro com nome do arquivo ausente.`,
+          body: `Nome do arquivo para consultar ausente.`,
         };
       }
 
       const file = await this.getFileByNameRepository.getFileByName({
         filename,
       });
+
+      const SECRET_KEY = process.env.SECRET_KEY || "secret";
+      const decryptedContent = CryptoJS.AES.decrypt(
+        file.content,
+        SECRET_KEY
+      ).toString(CryptoJS.enc.Utf8);
+
+      file.content = decryptedContent;
 
       return {
         statusCode: HttpStatusCode.OK,

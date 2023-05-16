@@ -11,7 +11,7 @@ export class DeleteFileController {
       if (!filename) {
         return {
           statusCode: HttpStatusCode.BAD_REQUEST,
-          body: `Parâmetro com nome do arquivo ausente.`,
+          body: `Nome do arquivo para deletar ausente.`,
         };
       }
 
