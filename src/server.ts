@@ -16,7 +16,7 @@ db.once("open", () => {
 });
 
 // Rotas
-app.use("/files", fileRoutes);
+app.use("/", fileRoutes);
 
 app.use(handleErrorMiddleware);
 
