@@ -1,6 +1,7 @@
 import "dotenv/config";
 
 import express from "express";
+import cors from "cors";
 import fileRoutes from "./routes/fileRoutes";
 
 import { handleErrorMiddleware } from "./middlewares/handleErrorMiddleware";
@@ -18,6 +19,7 @@ db.once("open", () => {
 });
 
 // Rotas
+app.use(cors());
 app.use(rateLimitMiddleware);
 
 app.get("/", (req, res) => {
@@ -34,5 +36,7 @@ app.use("*", (req, res) => {
 
 // Iniciar servidor
 app.on("logged", () => {
-  app.listen(port, () => console.log(`Server rodando na porta ${port}`));
+  app.listen(port, () =>
+    console.log(`🚀 Server running on http://localhost:${port}`)
+  );
 });
