@@ -3,7 +3,7 @@ import { FileModel } from "../../models/File";
 import {
   IGetFileByNameRepository,
   IGetFileByNameParams,
-} from "../../controllers/read-file/protocols";
+} from "../../controllers/get-file-by-name/protocols";
 
 import { IFileModel } from "../../entities/file";
 

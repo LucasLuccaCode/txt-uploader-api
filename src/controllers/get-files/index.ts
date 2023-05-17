@@ -2,7 +2,7 @@ import { IGetFilesRepository } from "./protocols";
 import { IFileModelWithoutContent } from "../../entities/file";
 import { HttpStatusCode, IHttpResponse } from "../protocols";
 
-export class ListFilesController {
+export class GetFilesController {
   constructor(private readonly getFilesRepository: IGetFilesRepository) {}
 
   async handle(): Promise<IHttpResponse<IFileModelWithoutContent[] | string>> {

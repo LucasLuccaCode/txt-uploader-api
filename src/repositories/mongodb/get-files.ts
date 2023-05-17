@@ -1,6 +1,6 @@
 import { FileModel } from "../../models/File";
 
-import { IGetFilesRepository } from "../../controllers/list-files/protocols";
+import { IGetFilesRepository } from "../../controllers/get-files/protocols";
 import { IFileModelWithoutContent } from "../../entities/file";
 
 export class MongodbGetFilesRepository implements IGetFilesRepository {

@@ -5,7 +5,7 @@ import { IFileModel } from "../../entities/file";
 import { HttpStatusCode, IHttpRequest, IHttpResponse } from "../protocols";
 import { IGetFileByNameRepository } from "./protocols";
 
-export class ReadFileController {
+export class GetFileByNameController {
   constructor(
     private readonly getFileByNameRepository: IGetFileByNameRepository
   ) {}
