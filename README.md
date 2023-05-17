@@ -48,6 +48,17 @@ Api para upload de arquivos, o arquivo é recebido no formato `.txt`, tem seu co
   - `404 Not Found`: Arquivo não encontrado.
   - `500 Internal Server Error`: Erro ao excluir o arquivo.
 
+### Entidades
+
+```ts
+File {
+  id: string;
+  filename: string;
+  content: string;
+  createdAt: Date;
+}
+```
+
 ## Executando a API
 
 Siga as instruções abaixo para executar a sua API localmente(Localhost):
@@ -108,7 +119,7 @@ Certifique-se de enviar as solicitações para as rotas corretas, seguindo os m�
 
   - Clique aqui em [Vercel](https://vercel.com) para ir para o serviço.
 
-- Para adicionar seu banco de dados, você também precisará se cadastrar no serviço, e gerar a url para conexão.
+- Para adicionar seu banco de dados mongodb, você também precisará se cadastrar no serviço, e gerar a url para conexão.
 
   - Clique aqui em [Mongodb Atlas](https://account.mongodb.com/account/login) para ir para o serviço.
 
