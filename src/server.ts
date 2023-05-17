@@ -20,6 +20,10 @@ db.once("open", () => {
 // Rotas
 app.use(rateLimitMiddleware);
 
+app.get("/", (req, res) => {
+  res.status(200).send("Txt Uploader API");
+});
+
 app.use("/", fileRoutes);
 
 app.use(handleErrorMiddleware);
