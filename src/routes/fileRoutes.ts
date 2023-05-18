@@ -10,22 +10,20 @@ import { MongodbGetFilesRepository } from "../repositories/mongodb/get-files";
 import { MongodbGetFileByNameRepository } from "../repositories/mongodb/get-file-by-name";
 import { MongodbDeleteFileRepository } from "../repositories/mongodb/delete-file";
 
-import { upload } from "../config/multerConfig";
+import { multerUpload } from "../config/multerConfig";
 
 const router = Router();
 
-router.post(
-  "/upload",
-  upload.single("file"),
-  async (req: Request, res: Response) => {
-    const uploadFileController = new UploadFileController(
-      new MongodbUploadFileRepository()
-    );
-    const result = await uploadFileController.handle({ file: req?.file });
+router.post("/upload", multerUpload, async (req: Request, res: Response) => {
+  const uploadFileController = new UploadFileController(
+    new MongodbUploadFileRepository()
+  );
+  const result = await uploadFileController.handle({
+    files: Object.values(req?.files || {}),
+  });
 
-    res.status(result.statusCode).json({ message: result.body });
-  }
-);
+  res.status(result.statusCode).json({ message: result.body });
+});
 
 router.get("/files", async (req: Request, res: Response) => {
   const getFilesController = new GetFilesController(

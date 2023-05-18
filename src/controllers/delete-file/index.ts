@@ -20,7 +20,7 @@ export class DeleteFileController {
       });
 
       return {
-        statusCode: HttpStatusCode.NOT_FOUND,
+        statusCode: HttpStatusCode.OK,
         body: `Arquivo ${filename} deletado.`,
       };
     } catch (error: any) {

@@ -5,7 +5,7 @@ export interface IHttpRequest<T> {
 }
 
 export interface IMulterHttpRequest<T> extends IHttpRequest<T> {
-  file?: Express.Multer.File;
+  files: Express.Multer.File[];
 }
 
 export enum HttpStatusCode {

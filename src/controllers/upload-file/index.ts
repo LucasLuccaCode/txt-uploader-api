@@ -12,39 +12,46 @@ export class UploadFileController {
   constructor(private readonly uploadFileRepository: IUploadFileRepository) {}
 
   async handle({
-    file,
+    files,
   }: IMulterHttpRequest<null>): Promise<IHttpResponse<string>> {
     try {
-      if (!file) {
+      if (!files.length) {
         return {
           statusCode: HttpStatusCode.BAD_REQUEST,
           body: "Nenhum arquivo foi enviado.",
         };
       }
 
-      const { buffer, originalname: filename } = file;
-
       const SECRET_KEY = process.env.SECRET_KEY || "secret";
 
-      const content = buffer.toString("utf-8");
-      const encryptedContent = CryptoJS.AES.encrypt(
-        content,
-        SECRET_KEY
-      ).toString();
+      for (const file of files) {
+        const { buffer, originalname: filename } = file;
 
-      await this.uploadFileRepository.uploadFile({
-        filename,
-        content: encryptedContent,
-      });
+        const content = buffer.toString("utf-8");
+        const encryptedContent = CryptoJS.AES.encrypt(
+          content,
+          SECRET_KEY
+        ).toString();
+
+        await this.uploadFileRepository.uploadFile({
+          filename,
+          content: encryptedContent,
+        });
+      }
+
+      const body =
+        files.length > 1
+          ? `${files.length} arquivos salvos com sucesso.`
+          : `${files[0].originalname} salvo com sucesso.`;
 
       return {
         statusCode: HttpStatusCode.CREATED,
-        body: `Arquivo ${filename} salvo.`,
+        body,
       };
     } catch (error) {
       return {
         statusCode: HttpStatusCode.SERVER_ERROR,
-        body: "Erro ao tentar salvar arquivo, tente novamente mais tarde.",
+        body: "Erro ao tentar salvar arquivos, tente novamente mais tarde.",
       };
     }
   }
