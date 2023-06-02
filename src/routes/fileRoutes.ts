@@ -4,11 +4,13 @@ import { UploadFileController } from "../controllers/upload-file";
 import { GetFilesController } from "../controllers/get-files";
 import { GetFileByNameController } from "../controllers/get-file-by-name";
 import { DeleteFileController } from "../controllers/delete-file";
+import { DeleteAllFilesController } from "../controllers/delete-all-files";
 
 import { MongodbUploadFileRepository } from "../repositories/mongodb/upload-file";
 import { MongodbGetFilesRepository } from "../repositories/mongodb/get-files";
 import { MongodbGetFileByNameRepository } from "../repositories/mongodb/get-file-by-name";
 import { MongodbDeleteFileRepository } from "../repositories/mongodb/delete-file";
+import { MongodbDeleteAllFilesRepository } from "../repositories/mongodb/delete-all-files";
 
 import { multerUpload } from "../config/multerConfig";
 
@@ -48,6 +50,15 @@ router.delete("/files/:filename", async (req: Request, res: Response) => {
     new MongodbDeleteFileRepository()
   );
   const result = await deleteFileController.handle({ params: req.params });
+
+  res.status(result.statusCode).json({ message: result.body });
+});
+
+router.delete("/files", async (req: Request, res: Response) => {
+  const deleteAllFilesController = new DeleteAllFilesController(
+    new MongodbDeleteAllFilesRepository()
+  );
+  const result = await deleteAllFilesController.handle();
 
   res.status(result.statusCode).json({ message: result.body });
 });
